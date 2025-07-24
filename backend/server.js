@@ -1,4 +1,4 @@
-// Updated Backend with Soft Delete Support
+
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -32,7 +32,7 @@ const taskSchema = new mongoose.Schema(
 
 const Task = mongoose.model("Task", taskSchema);
 
-// GET all tasks (excluding soft deleted)
+
 app.get("/api/tasks", async (req, res) => {
   try {
     const tasks = await Task.find({ deleted: false }).sort({ id: 1 });
@@ -42,7 +42,7 @@ app.get("/api/tasks", async (req, res) => {
   }
 });
 
-// POST new task
+
 app.post("/api/tasks", async (req, res) => {
   try {
     const lastTask = await Task.findOne().sort({ id: -1 });
@@ -58,7 +58,7 @@ app.post("/api/tasks", async (req, res) => {
   }
 });
 
-// SOFT DELETE a task
+
 app.delete("/api/tasks/:id", async (req, res) => {
   try {
     await Task.findOneAndUpdate(
@@ -72,7 +72,7 @@ app.delete("/api/tasks/:id", async (req, res) => {
   }
 });
 
-// UPDATE a task
+
 app.put("/api/tasks/:id", async (req, res) => {
   try {
     const updatedTask = await Task.findOneAndUpdate(
@@ -90,5 +90,5 @@ app.put("/api/tasks/:id", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 Backend running at http://localhost:${PORT}`);
+  console.log(` Backend running at http://localhost:${PORT}`);
 });
