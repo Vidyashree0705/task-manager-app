@@ -1,0 +1,65 @@
+.App {
+  max-width: 600px;
+  margin: auto;
+  font-family: sans-serif;
+  padding: 20px;
+}
+
+.input-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.input-box input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.input-box button {
+  padding: 8px 14px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.task-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.task-card h3 {
+  margin: 0 0 5px 0;
+}
+
+.task-card button {
+  margin-right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+  color: black;
+}
+
+.timestamp-container {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  font-size: 14px;
+  color: #555;
+  font-family: inherit;
+}
+
+.timestamp-label {
+  font-size: 13px;
+  color: black;
+  font-weight: 500;
+}
