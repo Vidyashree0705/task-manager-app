@@ -8,8 +8,10 @@ function App() {
   const [taskDetails, setTaskDetails] = useState("");
   const [editId, setEditId] = useState(null);
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
   const fetchTasks = async () => {
-    const res = await axios.get("http://localhost:5000/api/tasks");
+    const res = await axios.get(`${API_URL}/api/tasks`);
     setTasks(res.data);
   };
 
@@ -20,16 +22,15 @@ function App() {
   const handleSubmit = async () => {
     if (!taskName || !taskDetails) return;
 
+    const payload = {
+      title: taskName,
+      description: taskDetails,
+    };
+
     if (editId) {
-      await axios.put(`http://localhost:5000/api/tasks/${editId}`, {
-        title: taskName,
-        description: taskDetails,
-      });
+      await axios.put(`${API_URL}/api/tasks/${editId}`, payload);
     } else {
-      await axios.post("http://localhost:5000/api/tasks", {
-        title: taskName,
-        description: taskDetails,
-      });
+      await axios.post(`${API_URL}/api/tasks`, payload);
     }
 
     setTaskName("");
@@ -41,17 +42,18 @@ function App() {
   const handleEdit = (task) => {
     setTaskName(task.title);
     setTaskDetails(task.description);
-    setEditId(task.id);
+    setEditId(task._id);
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:5000/api/tasks/${id}`);
+    await axios.delete(`${API_URL}/api/tasks/${id}`);
     fetchTasks();
   };
 
   return (
     <div className="App">
       <h1>Task List</h1>
+
       <div className="input-box">
         <input
           type="text"
@@ -71,27 +73,31 @@ function App() {
       </div>
 
       {tasks.map((task) => (
-  <div key={task.id} className="task-card">
-    <h3>{task.title}</h3>
-    <p>{task.description}</p>
-    
-    <div className="task-footer">
-      <button onClick={() => handleEdit(task)}>✏️ Edit</button>
-      <button onClick={() => handleDelete(task.id)}>🗑️ Delete</button>
-    
-        <div className="timestamp-container">
-    <span className="timestamp-label">
-      Created: {task.createdAt ? new Date(task.createdAt).toLocaleString() : "N/A"}
-    </span>
-    <span className="timestamp-label">
-      Updated: {task.updatedAt ? new Date(task.updatedAt).toLocaleString() : "N/A"}
-    </span>
-  </div>
-    
-    </div>
-  </div>
-))}
+        <div key={task._id} className="task-card">
+          <h3>{task.title}</h3>
+          <p>{task.description}</p>
 
+          <div className="task-footer">
+            <button onClick={() => handleEdit(task)}>✏️ Edit</button>
+            <button onClick={() => handleDelete(task._id)}>🗑️ Delete</button>
+
+            <div className="timestamp-container">
+              <span className="timestamp-label">
+                Created:{" "}
+                {task.createdAt
+                  ? new Date(task.createdAt).toLocaleString()
+                  : "N/A"}
+              </span>
+              <span className="timestamp-label">
+                Updated:{" "}
+                {task.updatedAt
+                  ? new Date(task.updatedAt).toLocaleString()
+                  : "N/A"}
+              </span>
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
